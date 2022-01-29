@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request, Response, session
-#from flask.ext.session import Session
-#from flask_session import Session
 import threading
 from datetime import datetime
 import socket
@@ -9,33 +7,36 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 lock = threading.Lock()
 
-def parse_int(input):
+### string to int, but int must be 0 - 100 (or limit) ###
+def parse_int(input, limit=100):
     try:
         if (len(input) > 5):
             x = -1
         else: x = int (input)
-        if (x < 0 or x >= 100):
+        if (x < 0 or x > limit):
             x = -1
     except:
         x = -1
     return x
 
-def update_data(i,val):
+### write integer to index in file (thread safe)
+def update_data(index,value):
     lock.acquire()
     try:
         with open('cache.txt','r+') as f:
-            f.seek(i*10)
-            f.write(str(val))
-            f.seek(i*10+9)
+            f.seek(index*10)
+            f.write(str(value))
+            f.seek(index*10+9)
             f.write("\n")
     finally:
         lock.release()
 
-def read_data(i):
+### write integer from index in file (thread safe)
+def read_data(index):
     lock.acquire()
     try:
         with open('cache.txt','r+') as f:
-            f.seek(i*10)
+            f.seek(index*10)
             ret = parse_int(f.read(4))
     finally:
         lock.release()
@@ -74,13 +75,13 @@ def set_code(code):
     val = parse_int(req)
     x = parse_int(code)	
     if (x >= 0):
-        #arr[x]=val
         update_data(x,val)
-    return main_page(url = request.path, value = "set!")
+        return Response('Success', status=200, mimetype='text/plain')
+    return Response('Error', status=400, mimetype='text/plain')
+    
 
 @app.route("/<other>")
-def hello(other):
+def not_fount(other):
 	return "Sorry, %s Not found" % other
 
-#return redirect(url_for('code',code = temp_var))
     
