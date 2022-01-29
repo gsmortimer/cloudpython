@@ -8,7 +8,7 @@ app = Flask(__name__)
 SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
-session['arr'] = [0] * 100
+#session['arr'] = [0] * 100
 
 def parse_int(input):
     try:
@@ -22,10 +22,12 @@ def parse_int(input):
     return x
 
 def update_data(i,val):
-	session['arr'][i]=val
+	session[str(i)]=val
 
 def read_data(i):
-	return (session['arr'][i])
+	if session.get[str(i)] == None:
+		return -1
+	return (session[str(i)])
 
 
 def main_page(url="unset", value="unset"):
