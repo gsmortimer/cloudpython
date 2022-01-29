@@ -5,7 +5,7 @@ from datetime import datetime
 import socket
 
 app = Flask(__name__)
-SESSION_TYPE = 'redis'
+SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
 Session(app)
 session['arr'] = [0] * 100
