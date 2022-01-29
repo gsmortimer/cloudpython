@@ -25,7 +25,7 @@ def update_data(i,val):
 	session[str(i)]=val
 
 def read_data(i):
-	if session.get[str(i)] == None:
+	if session.get(str(i)) == None:
 		return -1
 	return (session[str(i)])
 
