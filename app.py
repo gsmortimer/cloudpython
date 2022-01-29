@@ -1,14 +1,13 @@
 from flask import Flask, render_template, request, Response, session
 #from flask.ext.session import Session
-from flask_session import Session
+#from flask_session import Session
+import threading
 from datetime import datetime
 import socket
 
 app = Flask(__name__)
-SESSION_TYPE = 'filesystem'
 app.config.from_object(__name__)
-Session(app)
-#session['arr'] = [0] * 100
+lock = threading.Lock()
 
 def parse_int(input):
     try:
@@ -22,13 +21,25 @@ def parse_int(input):
     return x
 
 def update_data(i,val):
-	session[str(i)]=val
+    lock.acquire()
+    try:
+        with open('cache.txt','r+') as f:
+            f.seek(i*10)
+            f.write(str(val))
+            f.seek(i*10+9)
+            f.write("\n")
+    finally:
+        lock.release()
 
 def read_data(i):
-	if session.get(str(i)) == None:
-		return -1
-	return (session[str(i)])
-
+    lock.acquire()
+    try:
+        with open('cache.txt','r+') as f:
+            f.seek(i*10)
+            ret = parse_int(f.read(4))
+    finally:
+        lock.release()
+    return ret
 
 def main_page(url="unset", value="unset"):
 	now = datetime.now()
@@ -59,13 +70,13 @@ def get_code(code):
 	
 @app.route("/set/<code>", methods=['GET', 'POST'])
 def set_code(code):
-	req = request.args.get('x')
-	val = parse_int(req)
-	x = parse_int(code)	
-	if (x >= 0):
-		#arr[x]=val
-		update_data(x,val)
-	return main_page(url = request.path, value = "set!")
+    req = request.args.get('x')
+    val = parse_int(req)
+    x = parse_int(code)	
+    if (x >= 0):
+        #arr[x]=val
+        update_data(x,val)
+    return main_page(url = request.path, value = "set!")
 
 @app.route("/<other>")
 def hello(other):
