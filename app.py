@@ -44,11 +44,11 @@ def read_data(index):
     return ret
 
 ### Render web pages from templates
-def main_page(url="unset", 
-			  value="unset", 
-			  content="home", 
-			  template="main.tmpl"
-			 ):
+def main_page(content="home", 
+	      template="main.tmpl",
+	      url="unset", 
+	      value="unset", 
+	     ):
 	now = datetime.now()
 	host = socket.gethostbyname(socket.gethostname())
 	content += ".tmpl"
@@ -67,7 +67,7 @@ def main_page(url="unset",
 # Request Handling
 @app.route("/")
 def home():
-	return main_page("home")
+	return main_page()
 
 @app.route("/pages/<page>")
 def get_page(page):
