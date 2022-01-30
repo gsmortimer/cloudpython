@@ -87,28 +87,30 @@ def get_page(page):
 	
 @app.route("/code/<int:code>")
 def code_get_code(code):
-	x = parse_int(code)
-	if (x >= 0):
-		#value=str(session['arr'][x])
-		value=str(read_data(x))
+	ID = parse_int(code)
+	if (ID >= 0):
+		value=str(read_data(ID))
 		return main_page(url = request.path, value = value)
 	return main_page(url = request.path, value = "failed!")
 
 @app.route("/get/<code>")
 def get_code(code):
-	x = parse_int(code)
-	if (x >= 0):
-		value=str(read_data(x))
+	ID = parse_int(code)
+	if (ID >= 0):
+		value=str(read_data(ID))
 		return Response(value, status=200, mimetype='text/plain')
 	return Response('Error', status=400, mimetype='text/plain')
 	
+
 @app.route("/set/<code>", methods=['GET', 'POST'])
 def set_code(code):
     req = request.args.get('x')
     val = parse_int(req)
-    x = parse_int(code)	
-    if (x >= 0):
-        update_data(x,val)
+	if (code == ""):
+		code = request.args.get('id')
+    ID = parse_int(code)	
+    if (ID >= 0):
+        update_data(ID,val)
         return Response('Success', status=200, mimetype='text/plain')
     return Response('Error', status=400, mimetype='text/plain')
     
