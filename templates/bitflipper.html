@@ -22,6 +22,27 @@
     <p>Returns:</p>
     <p>On success: Status 200: &lt;value&gt;<br>
        On error: Status 404: Error</p>
-    <a href="#" class="btn btn-primary" role="button">Click!</a>
+  </div>
+  <div>
+    <form class="needs-validation" novalidate="" action="/set/0">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="id">ID</label>
+          <input type="text" class="form-control" id="id" placeholder="" value="" required="">
+          <div class="invalid-feedback">
+            Valid number form 0 to 100 required
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="x">Value</label>
+          <input type="text" class="form-control" id="x" placeholder="" value="" required="">
+          <div class="invalid-feedback">
+            Valid number form 0 to 1 required
+          </div>
+        </div>
+      </div>
+      <hr class="mb-4">
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Set</button>
+    </form>
   </div>
 </div>
