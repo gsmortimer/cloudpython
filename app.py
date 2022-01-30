@@ -19,9 +19,10 @@ def parse_int(input, limit=100):
 	try:
 		if (len(input) > 5):
 			x = -1
-		else: x = int (input)
-			if (x < 0 or x > limit):
-				x = -1
+		else: 
+			x = int (input)
+		if (x < 0 or x > limit):
+			x = -1
 	except:
 		x = -1
 	return x
