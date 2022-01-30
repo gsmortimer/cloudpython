@@ -61,7 +61,7 @@ def main_page(url="unset",
 						   timestamp = now, 
 						   host = host, 
 						   value = value, 
-						   content = page_content)
+						   content = page_content
 						  )
 	
 # Request Handling
