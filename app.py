@@ -116,7 +116,7 @@ def set_code(code):
 	return Response('Error', status=400, mimetype='text/plain')
 
 @app.route("/set", methods=['GET', 'POST'])
-set_code()
+def set_code()
 
 @app.route("/<path:other>")
 def not_found(other):
