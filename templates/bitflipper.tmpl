@@ -7,21 +7,21 @@
   <p>This URL: {{ url }} </p>
 </div>
 <div class="container">
-  <div class="row">
+  <div>
     <h2>Bit Flipper API</h2>
     <p>Saves bit states, that you can poll for later</p>
     <h3>Usage:</h3>
     <h4>Setting a bit: <b>/set/&lt;id&gt;?&lt;value&gt;</b></h4>
-    <p>id can range from 0 to 100</p>
-    <p>Value can be 0 or 1 (TODO)</p>
+    <p>id can range from 0 to 100<br>
+       Value can be 0 or 1 (TODO)</p>
     <p>Returns:</p>
-    <p>On success: Status 200: Success</p>
-    <p>On error: Status 404: Error</p>
+    <p>On success: Status 200: Success<br>
+       On error: Status 404: Error</p>
     <h4>Reading a bit: <b>/get/&lt;id&gt;</b></h4>
     <p>id can range from 0 to 100</p>
     <p>Returns:</p>
-    <p>On success: Status 200: &lt;value&gt;</p>
-    <p>On error: Status 404: Error</p>
+    <p>On success: Status 200: &lt;value&gt;<br>
+       On error: Status 404: Error</p>
     <a href="#" class="btn btn-primary" role="button">Click!</a>
   </div>
 </div>
