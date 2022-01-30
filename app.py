@@ -57,17 +57,17 @@ def read_data(index):
 
 ### Render web pages from templates
 def main_page(content="home", 
-	      template="main.tmpl",
+	      template="main.html",
 	      url="unset", 
 	      value="unset", 
 	     ):
 	now = datetime.now()
 	host = socket.gethostbyname(socket.gethostname())
-	content += ".tmpl"
+	content += ".html"
 	try:
 		page_content = render_template(content)
 	except:
-		page_content = render_template("404.tmpl")
+		page_content = render_template("404.html")
 	return render_template(template, 
 						   url = url, 
 						   timestamp = now, 

@@ -1,0 +1,23 @@
+  <div class="jumbotron text-center">
+      <h1>CloudPython</h1>
+      <p>Messing around with Flask Webapps using AWS Free tier</p>
+      <p>Bit flip API: <a href="/pages/bitflip">/pages/bitflipper</a></p>
+      <p>This URL: {{ url }} </p>
+    </div>
+    <div class="container">
+    	<div class="row">
+        <div class="col-sm-4">
+          <h3>Code 1</h3>
+          <a href="/code/1" class="btn btn-primary" role="button">Click!</a>
+        </div>
+        <div class="col-sm-4">
+          <h3>Code 2</h3>
+          <a href="#" class="btn btn-primary" role="button">Click!</a>
+        </div>
+        <div class="col-sm-4">
+          <h3>Code 3<h3>
+          <a href="#" class="btn btn-primary" role="button">Click!</a>
+        </div>
+      </div>
+    </div>
+    
