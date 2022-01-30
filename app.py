@@ -16,15 +16,15 @@ def is_changed(filename,since):
 ### string to int, but int must be 0 - 100 (or limit) ###
 ### returns -1 on failure ###
 def parse_int(input, limit=100):
-    try:
-        if (len(input) > 5):
-            x = -1
-        else: x = int (input)
-        if (x < 0 or x > limit):
-            x = -1
-    except:
-        x = -1
-    return x
+	try:
+		if (len(input) > 5):
+			x = -1
+		else: x = int (input)
+			if (x < 0 or x > limit):
+				x = -1
+	except:
+		x = -1
+	return x
 
 ### write integer to index in file (thread safe)
 def update_data(index,value):
@@ -104,15 +104,15 @@ def get_code(code):
 
 @app.route("/set/<code>", methods=['GET', 'POST'])
 def set_code(code):
-    req = request.args.get('x')
-    val = parse_int(req)
+	req = request.args.get('x')
+	val = parse_int(req)
 	if (code == ""):
 		code = request.args.get('id')
-    ID = parse_int(code)	
-    if (ID >= 0):
-        update_data(ID,val)
-        return Response('Success', status=200, mimetype='text/plain')
-    return Response('Error', status=400, mimetype='text/plain')
+	ID = parse_int(code)	
+	if (ID >= 0):
+		update_data(ID,val)
+		return Response('Success', status=200, mimetype='text/plain')
+	return Response('Error', status=400, mimetype='text/plain')
     
 
 @app.route("/<path:other>")
