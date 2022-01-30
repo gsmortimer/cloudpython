@@ -8,6 +8,7 @@ app.config.from_object(__name__)
 lock = threading.Lock()
 
 ### string to int, but int must be 0 - 100 (or limit) ###
+### returns -1 on failure ###
 def parse_int(input, limit=100):
     try:
         if (len(input) > 5):
@@ -42,11 +43,21 @@ def read_data(index):
         lock.release()
     return ret
 
-def main_page(url="unset", value="unset"):
+### Render web pages from templates
+def main_page(url="unset", 
+			  value="unset", 
+			  content="home.tmpl", 
+			  template="main.tmpl"
+			 ):
 	now = datetime.now()
 	host = socket.gethostbyname(socket.gethostname())
-	return render_template('home.html', url = url, timestamp = now, host = host, value = value)
-
+	return render_template(template, 
+						   url = url, 
+						   timestamp = now, 
+						   host = host, 
+						   value = value, 
+						   content = render_templete(content)
+						  )
 @app.route("/")
 def home():
 	#return app.send_static_file('test.html')
