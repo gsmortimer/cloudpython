@@ -82,7 +82,7 @@ def code_get_code(code):
 		return main_page(url = request.path, value = value)
 	return main_page(url = request.path, value = "failed!")
 
-@app.route("/get/<int:code>")
+@app.route("/get/<code>")
 def get_code(code):
 	x = parse_int(code)
 	if (x >= 0):
@@ -90,7 +90,7 @@ def get_code(code):
 		return Response(value, status=200, mimetype='text/plain')
 	return Response('Error', status=400, mimetype='text/plain')
 	
-@app.route("/set/<int:code>", methods=['GET', 'POST'])
+@app.route("/set/<code>", methods=['GET', 'POST'])
 def set_code(code):
     req = request.args.get('x')
     val = parse_int(req)
