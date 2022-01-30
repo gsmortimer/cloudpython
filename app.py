@@ -3,7 +3,7 @@ import threading
 from datetime import datetime
 import socket
 import time
-import os.stat
+from os import stat as os_stat
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -11,7 +11,7 @@ lock = threading.Lock()
 
 ### checks if a file has changed
 def is_changed(filename):
-	return os.stat(filename).st_mtime > time.time
+	return os_stat(filename).st_mtime > time.time()
 
 ### string to int, but int must be 0 - 100 (or limit) ###
 ### returns -1 on failure ###
@@ -40,11 +40,11 @@ def update_data(index,value):
 
 ### write integer from index in file (thread safe)
 def read_data(index):
-	i = 0
-	while (i < 20 or not (ischanged('cache.txt')):
-		print ("waiting %d" % i)
-		time.sleep(1)
-		i += 1
+    i = 0
+    while (i < 20 and not (is_changed('cache.txt'))):
+        print ("waiting %d" % i)
+        time.sleep(1)
+        i += 1
     lock.acquire()
     try:
         with open('cache.txt','r+') as f:
