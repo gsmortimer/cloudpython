@@ -46,24 +46,34 @@ def read_data(index):
 ### Render web pages from templates
 def main_page(url="unset", 
 			  value="unset", 
-			  content="home.tmpl", 
+			  content="home", 
 			  template="main.tmpl"
 			 ):
 	now = datetime.now()
 	host = socket.gethostbyname(socket.gethostname())
+	content += ".tmpl"
+	try:
+		page_content = render_template(content)
+	except:
+		page_content = render_template("404.tmpl")
 	return render_template(template, 
 						   url = url, 
 						   timestamp = now, 
 						   host = host, 
 						   value = value, 
-						   content = render_template(content)
+						   content = page_content)
 						  )
+	
+# Request Handling
 @app.route("/")
 def home():
-	#return app.send_static_file('test.html')
 	return main_page("home")
 
-@app.route("/code/<code>")
+@app.route("/pages/<page>")
+def get_page(page):
+		return main_page(page)
+	
+@app.route("/code/<int:code>")
 def code_get_code(code):
 	x = parse_int(code)
 	if (x >= 0):
@@ -72,7 +82,7 @@ def code_get_code(code):
 		return main_page(url = request.path, value = value)
 	return main_page(url = request.path, value = "failed!")
 
-@app.route("/get/<code>")
+@app.route("/get/<int:code>")
 def get_code(code):
 	x = parse_int(code)
 	if (x >= 0):
@@ -80,7 +90,7 @@ def get_code(code):
 		return Response(value, status=200, mimetype='text/plain')
 	return Response('Error', status=400, mimetype='text/plain')
 	
-@app.route("/set/<code>", methods=['GET', 'POST'])
+@app.route("/set/<int:code>", methods=['GET', 'POST'])
 def set_code(code):
     req = request.args.get('x')
     val = parse_int(req)
@@ -91,8 +101,8 @@ def set_code(code):
     return Response('Error', status=400, mimetype='text/plain')
     
 
-@app.route("/<other>")
-def not_fount(other):
-	return "Sorry, %s Not found" % other
+@app.route("/<path:other>")
+def not_found(other):
+	return main_page("404")
 
     
