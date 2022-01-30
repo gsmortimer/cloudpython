@@ -104,6 +104,17 @@ def get_code(code):
 	
 
 @app.route("/set/<code>", methods=['GET', 'POST'])
+def set_code():
+	req = request.args.get('x')
+	val = parse_int(req)
+	code = request.args.get('id')
+	ID = parse_int(code)	
+	if (ID >= 0):
+		update_data(ID,val)
+		return Response('Success', status=200, mimetype='text/plain')
+	return Response('Error', status=400, mimetype='text/plain')
+
+@app.route("/set", methods=['GET', 'POST'])
 def set_code(code):
 	req = request.args.get('x')
 	val = parse_int(req)
@@ -114,9 +125,6 @@ def set_code(code):
 		update_data(ID,val)
 		return Response('Success', status=200, mimetype='text/plain')
 	return Response('Error', status=400, mimetype='text/plain')
-
-@app.route("/set", methods=['GET', 'POST'])
-set_code("")
 
 @app.route("/<path:other>")
 def not_found(other):
