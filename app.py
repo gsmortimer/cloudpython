@@ -114,7 +114,9 @@ def set_code(code):
 		update_data(ID,val)
 		return Response('Success', status=200, mimetype='text/plain')
 	return Response('Error', status=400, mimetype='text/plain')
-    
+
+@app.route("/set", methods=['GET', 'POST'])
+set_code()
 
 @app.route("/<path:other>")
 def not_found(other):
