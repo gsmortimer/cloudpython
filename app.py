@@ -56,7 +56,7 @@ def main_page(url="unset",
 						   timestamp = now, 
 						   host = host, 
 						   value = value, 
-						   content = render_templete(content)
+						   content = render_template(content)
 						  )
 @app.route("/")
 def home():
