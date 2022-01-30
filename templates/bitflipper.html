@@ -23,8 +23,9 @@
     <p>On success: Status 200: &lt;value&gt;<br>
        On error: Status 404: Error</p>
   </div>
-  <div>
-    <form class="needs-validation" novalidate="" action="/set/0">
+  <div class="col-sm-6 col-sm-offset-3">
+    <h1>Processing an AJAX Form</h1>
+    <form class="needs-validation" novalidate="" action="/set/0" method="GET">
       <div class="row">
         <div class="col-md-6 mb-3">
           <label for="id">ID</label>
@@ -46,3 +47,39 @@
     </form>
   </div>
 </div>
+<script> 
+  document.addEventListener("submit", (e) => {
+    // Store reference to form to make later code easier to read
+    const form = e.target;
+
+    // Post data using the Fetch API
+    fetch(form.action, {
+      method: form.method,
+      body: new FormData(form),
+    })
+      // We turn the response into text as we expect HTML
+      .then((res) => res.text())
+
+      // Let's turn it into an HTML document
+      .then((text) => new DOMParser().parseFromString(text, "text/html"))
+
+      // Now we have a document to work with let's replace the <form>
+      .then((doc) => {
+        // Create result message container and copy HTML from doc
+        const result = document.createElement("div");
+        result.innerHTML = doc.body.innerHTML;
+
+        // Allow focussing this element with JavaScript
+        result.tabIndex = -1;
+
+        // And replace the form with the response children
+        form.parentNode.replaceChild(result, form);
+
+        // Move focus to the status message
+        result.focus();
+      });
+
+    // Prevent the default form submit
+    e.preventDefault();
+  });
+</script>
